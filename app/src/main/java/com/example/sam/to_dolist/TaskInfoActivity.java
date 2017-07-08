@@ -7,7 +7,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import java.text.DateFormat;
+import java.util.Date;
 
 public class TaskInfoActivity extends AppCompatActivity {
 
@@ -24,13 +28,18 @@ public class TaskInfoActivity extends AppCompatActivity {
 
             EditText description = (EditText) findViewById(R.id.task_description);
             description.setText(task.getDescription());
+
+            TextView created = (TextView) findViewById(R.id.date_created);
+            created.setText(task.getDate().toString());
         }
     }
 
     public void onClick(View button){
         EditText title = (EditText) findViewById(R.id.info_task_title);
         EditText description = (EditText) findViewById(R.id.task_description);
+        TextView created = (TextView) findViewById(R.id.date_created);
         Task task = new Task(title.getText().toString(), description.getText().toString());
+        task.setDateString(created.getText().toString());
 
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("savedTask", task);

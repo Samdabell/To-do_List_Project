@@ -16,9 +16,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".TaskInfoActivity"
+        <activity
+            android:name=".TaskInfoActivity"
+            android:label="@string/info_title"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".CompletedActivity"
+            android:label="@string/completed_tasks"
             android:parentActivityName=".MainActivity"
-            android:label="@string/info_title"></activity>
+            ></activity>
     </application>
 
 </manifest>

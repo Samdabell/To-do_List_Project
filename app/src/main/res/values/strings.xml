@@ -6,4 +6,9 @@
     <string name="title_hint">Task Title</string>
     <string name="description_hint">Task Description</string>
     <string name="save">Save</string>
+    <string name="preference_file_key">TO DO LIST</string>
+    <string name="completed_tasks">Completed Tasks</string>
+    <string name="delete">Delete</string>
+    <string name="preference_file_key_2">COMPLETED LIST</string>
+    <string name="date_created">Date Created: </string>
 </resources>
