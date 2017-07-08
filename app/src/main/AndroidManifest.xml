@@ -16,6 +16,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".TaskInfoActivity"
+            android:parentActivityName=".MainActivity"
+            android:label="@string/info_title"></activity>
     </application>
 
 </manifest>

@@ -1,10 +1,12 @@
 package com.example.sam.to_dolist;
 
+import java.io.Serializable;
+
 /**
  * Created by Sam on 06/07/2017.
  */
 
-public class Task {
+public class Task implements Serializable{
 
     private String title;
     private String description;
