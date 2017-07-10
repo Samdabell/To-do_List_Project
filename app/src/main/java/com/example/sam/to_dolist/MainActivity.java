@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ListView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.google.gson.Gson;
@@ -72,6 +73,8 @@ public class MainActivity extends AppCompatActivity{
                 if (task.getDate().toString().equals(savedTask.getDateString())) {
                     task.setTitle(savedTask.getTitle());
                     task.setDescription(savedTask.getDescription());
+                    task.setDueDate(savedTask.getDueDate());
+                    task.setPriority(savedTask.isPriority());
                     updated = true;
                 }
             }
@@ -109,6 +112,8 @@ public class MainActivity extends AppCompatActivity{
         editor.apply();
 
         startActivity(intent);
+
+        Toast.makeText(this, "Task Completed", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -127,69 +132,4 @@ public class MainActivity extends AppCompatActivity{
         return super.onOptionsItemSelected(item);
     }
 
-//    public void onCheckboxClicked(View view){
-//        boolean checked = ((CheckBox) view).isChecked();
-//        Task checkedTask = (Task)view.getTag();
-//
-//        SharedPreferences sharedPref = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-//        String toDoList = sharedPref.getString("ToDoList", new ArrayList<Task>().toString());
-//        Gson gson = new Gson();
-//        TypeToken<ArrayList<Task>> taskArrayList = new TypeToken<ArrayList<Task>>(){};
-//        ArrayList<Task> list = gson.fromJson(toDoList, taskArrayList.getType());
-//
-//        for (Task task : list ) {
-//            if (task.getTitle().equals(checkedTask.getTitle())) {
-//                switch (view.getId()) {
-//                    case R.id.priority_check:
-//                        if (checked) {
-//                            task.setPriority(true);
-//                            ((CheckBox) view).setChecked(true);
-//                        }
-//                        else {
-//                            task.setPriority(false);
-//                            ((CheckBox) view).setChecked(false);
-//                        }
-//                }
-//            }
-//        }
-//
-//        Collections.sort(list, Task.PriorityComparator);
-//        SharedPreferences.Editor editor = sharedPref.edit();
-//        editor.apply();
-//        editor.putString("ToDoList", gson.toJson(list));
-//        editor.apply();
-//
-//    }
-
-//    public void priorityToggle(View view){
-//
-//        final Task toggledTask = (Task)view.getTag();
-//        ToggleButton toggle = (ToggleButton) findViewById(R.id.priority_toggle);
-//        toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                SharedPreferences sharedPref = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-//        String toDoList = sharedPref.getString("ToDoList", new ArrayList<Task>().toString());
-//        Gson gson = new Gson();
-//        TypeToken<ArrayList<Task>> taskArrayList = new TypeToken<ArrayList<Task>>(){};
-//        ArrayList<Task> list = gson.fromJson(toDoList, taskArrayList.getType());
-//                for (Task task : list) {
-//                    if (task.getTitle().equals(toggledTask.getTitle())) {
-//
-//                        if (isChecked) {
-//                            task.setPriority(true);
-//                        } else {
-//                            task.setPriority(false);
-//                        }
-//                    }
-//
-//                }
-//
-//                Collections.sort(list, Task.PriorityComparator);
-//        SharedPreferences.Editor editor = sharedPref.edit();
-//        editor.apply();
-//        editor.putString("ToDoList", gson.toJson(list));
-//        editor.apply();
-//            }
-//        });
-//    }
 }

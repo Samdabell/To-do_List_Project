@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -40,6 +41,9 @@ public class TaskInfoActivity extends AppCompatActivity {
             TextView dateLabel = (TextView) findViewById(R.id.date_label);
             dateLabel.setVisibility(View.VISIBLE);
 
+            CheckBox checkBox = (CheckBox) findViewById(R.id.priority_check);
+            checkBox.setChecked(task.isPriority());
+
             dueDate.setText(task.getDueDate());
         }
 
@@ -68,9 +72,15 @@ public class TaskInfoActivity extends AppCompatActivity {
         EditText description = (EditText) findViewById(R.id.task_description);
         TextView created = (TextView) findViewById(R.id.date_created);
         EditText dueDate = (EditText) findViewById(R.id.due_date);
-        Task task = new Task(title.getText().toString(), description.getText().toString());
+        CheckBox priority = (CheckBox) findViewById(R.id.priority_check);
+        Task task = new Task(title.getText().toString());
+        task.setDescription(description.getText().toString());
         task.setDateString(created.getText().toString());
         task.setDueDate(dueDate.getText().toString());
+
+        if (priority.isChecked()){
+            task.setPriority(true);
+        }
 
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("savedTask", task);

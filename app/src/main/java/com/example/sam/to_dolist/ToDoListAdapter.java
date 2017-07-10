@@ -1,16 +1,20 @@
 package com.example.sam.to_dolist;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CheckedTextView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import java.util.ArrayList;
+
+import static android.R.attr.button;
 
 
 /**
@@ -31,17 +35,21 @@ public class ToDoListAdapter extends ArrayAdapter<Task> {
 
         Task currentTask = getItem(position);
 
-        TextView task_title = (TextView)listItemView.findViewById(R.id.task_title);
+        CheckedTextView task_title = (CheckedTextView)listItemView.findViewById(R.id.task_title);
         task_title.setText(currentTask.getTitle());
+
+        if (currentTask.isPriority()) {
+            task_title.setCheckMarkDrawable(R.mipmap.ic_star_black_24dp);
+            task_title.setChecked(true);
+        }
+        else {
+            task_title.setCheckMarkDrawable(null);
+            task_title.setChecked(false);
+        }
 
         Button button = (Button)listItemView.findViewById(R.id.complete_button);
         button.setTag(currentTask);
 
-//        CheckBox checkBox = (CheckBox)listItemView.findViewById(R.id.priority_check);
-//        checkBox.setTag(currentTask);
-
-//        ToggleButton toggle = (ToggleButton)listItemView.findViewById(R.id.priority_toggle);
-//        toggle.setTag(currentTask);
 
         listItemView.setTag(currentTask);
 

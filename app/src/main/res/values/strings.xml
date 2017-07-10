@@ -4,11 +4,13 @@
     <string name="check_box">Completed?</string>
     <string name="info_title">Task Info</string>
     <string name="title_hint">Task Title</string>
-    <string name="description_hint">Task Description</string>
+    <string name="description_hint">Task Description (Optional)</string>
     <string name="save">Save</string>
     <string name="preference_file_key">TO DO LIST</string>
     <string name="completed_tasks">Completed Tasks</string>
     <string name="delete">Delete</string>
     <string name="preference_file_key_2">COMPLETED LIST</string>
     <string name="date_created">Date Created: </string>
+    <string name="priority_check">Priority?</string>
+    <string name="due_date_hint">Due Date (Optional)</string>
 </resources>

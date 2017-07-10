@@ -8,20 +8,22 @@
     android:onClick="getTask"
     >
 
-    <TextView
+    <CheckedTextView
         android:id="@+id/task_title"
         android:layout_width="0dp"
         android:layout_height="60sp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
+        android:checkMark="@mipmap/ic_star_black_24dp"
+        android:checkMarkTint="@color/colorPrimary"
         android:gravity="center_vertical"
         android:textSize="24sp"
         android:textStyle="italic"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Task title"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/complete_button"
-        android:layout_marginRight="8dp"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Task title" />
 
     <Button
         android:id="@+id/complete_button"

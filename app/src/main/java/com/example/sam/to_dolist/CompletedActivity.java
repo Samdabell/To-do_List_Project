@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -45,6 +46,11 @@ public class CompletedActivity extends AppCompatActivity {
 
         ListView listView = (ListView) findViewById(R.id.completed_list);
         listView.setAdapter(completeListAdapter);
+
+        if (completedTask != null){
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        }
     }
 
     public void getTask(View listItem){
@@ -74,6 +80,9 @@ public class CompletedActivity extends AppCompatActivity {
         editor.apply();
 
         finish();
-        startActivity(getIntent());
+        Intent intent = new Intent(this, CompletedActivity.class);
+        startActivity(intent);
+
+        Toast.makeText(this, "Task Deleted", Toast.LENGTH_SHORT).show();
     }
 }

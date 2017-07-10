@@ -17,9 +17,9 @@ public class Task implements Serializable{
     private boolean priority;
     private String dueDate;
 
-    public Task(String title, String description) {
+    public Task(String title) {
         this.title = title;
-        this.description = description;
+        description = null;
         date = new Date();
         dateString = null;
         priority = false;
@@ -67,7 +67,7 @@ public class Task implements Serializable{
         public int compare(Task t1, Task t2) {
             boolean PriorityCheck1 = t1.isPriority();
             boolean PriorityCheck2 = t2.isPriority();
-            return Boolean.valueOf(PriorityCheck1).compareTo(PriorityCheck2);
+            return Boolean.valueOf(PriorityCheck2).compareTo(PriorityCheck1);
         }
     };
 
