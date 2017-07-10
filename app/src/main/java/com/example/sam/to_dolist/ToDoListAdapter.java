@@ -6,7 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import java.util.ArrayList;
 
@@ -34,6 +36,12 @@ public class ToDoListAdapter extends ArrayAdapter<Task> {
 
         Button button = (Button)listItemView.findViewById(R.id.complete_button);
         button.setTag(currentTask);
+
+//        CheckBox checkBox = (CheckBox)listItemView.findViewById(R.id.priority_check);
+//        checkBox.setTag(currentTask);
+
+//        ToggleButton toggle = (ToggleButton)listItemView.findViewById(R.id.priority_toggle);
+//        toggle.setTag(currentTask);
 
         listItemView.setTag(currentTask);
 
