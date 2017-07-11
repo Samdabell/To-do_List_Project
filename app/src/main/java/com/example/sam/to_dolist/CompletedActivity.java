@@ -22,12 +22,9 @@ public class CompletedActivity extends AppCompatActivity {
         setContentView(R.layout.activity_completed);
 
         SharedPreferences sharedPref = getSharedPreferences(getString(R.string.preference_file_key_2), Context.MODE_PRIVATE);
-
         String completedList = sharedPref.getString("CompletedList", new ArrayList<Task>().toString());
         Gson gson = new Gson();
-
         TypeToken<ArrayList<Task>> taskArrayList = new TypeToken<ArrayList<Task>>(){};
-
         ArrayList<Task> list = gson.fromJson(completedList, taskArrayList.getType());
 
         Task completedTask = (Task) getIntent().getSerializableExtra("completedTask");
@@ -35,15 +32,12 @@ public class CompletedActivity extends AppCompatActivity {
             list.add(completedTask);
         }
 
-
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.apply();
-
         editor.putString("CompletedList", gson.toJson(list));
         editor.apply();
 
         CompleteListAdapter completeListAdapter = new CompleteListAdapter(this, list);
-
         ListView listView = (ListView) findViewById(R.id.completed_list);
         listView.setAdapter(completeListAdapter);
 
@@ -68,6 +62,7 @@ public class CompletedActivity extends AppCompatActivity {
         Gson gson = new Gson();
         TypeToken<ArrayList<Task>> taskArrayList = new TypeToken<ArrayList<Task>>(){};
         ArrayList<Task> list = gson.fromJson(completedList, taskArrayList.getType());
+
         for (Task task : list){
             if (task.getTitle().equals(deletedTask.getTitle())){
                 list.remove(task);

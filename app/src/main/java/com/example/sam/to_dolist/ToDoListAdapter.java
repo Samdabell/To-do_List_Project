@@ -50,7 +50,6 @@ public class ToDoListAdapter extends ArrayAdapter<Task> {
         Button button = (Button)listItemView.findViewById(R.id.complete_button);
         button.setTag(currentTask);
 
-
         listItemView.setTag(currentTask);
 
         return listItemView;

@@ -3,15 +3,19 @@ package com.example.sam.to_dolist;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
@@ -21,10 +25,15 @@ import com.google.gson.reflect.TypeToken;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import static android.R.id.list;
 import static android.R.id.toggle;
+import static com.example.sam.to_dolist.R.array.categories;
 
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
+
+    String category = null;
+    ArrayList<Task> mainList = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,28 +41,40 @@ public class MainActivity extends AppCompatActivity{
         setContentView(R.layout.activity_main);
 
         SharedPreferences sharedPref = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-
         String toDoList = sharedPref.getString("ToDoList", new ArrayList<Task>().toString());
         Gson gson = new Gson();
-
         TypeToken<ArrayList<Task>> taskArrayList = new TypeToken<ArrayList<Task>>(){};
-
         ArrayList<Task> list = gson.fromJson(toDoList, taskArrayList.getType());
 
         updateList(list);
 
         Collections.sort(list, Task.PriorityComparator);
-
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.apply();
-
         editor.putString("ToDoList", gson.toJson(list));
         editor.apply();
 
-        ToDoListAdapter toDoListAdapter = new ToDoListAdapter(this, list);
+        Spinner categories = (Spinner) findViewById(R.id.category_view);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.categories_view, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        categories.setAdapter(adapter);
+        categories.setOnItemSelectedListener(this);
 
-        ListView listView = (ListView) findViewById(R.id.main_list);
-        listView.setAdapter(toDoListAdapter);
+        String savedCategory = PreferenceManager.getDefaultSharedPreferences(this)
+                .getString(getString(R.string.preference_file_key_category), null);
+
+        setCategory(savedCategory);
+
+        if (category != null){
+            for (int i = 0; i < 5; i++) {
+                if (categories.getItemAtPosition(i).toString().equals(category)) {
+                    categories.setSelection(i);
+                }
+            }
+        }
+
+        filterList();
+
     }
 
 
@@ -75,6 +96,7 @@ public class MainActivity extends AppCompatActivity{
                     task.setDescription(savedTask.getDescription());
                     task.setDueDate(savedTask.getDueDate());
                     task.setPriority(savedTask.isPriority());
+                    task.setCategory(savedTask.getCategory());
                     updated = true;
                 }
             }
@@ -82,7 +104,7 @@ public class MainActivity extends AppCompatActivity{
                 list.add(savedTask);
             }
         }
-
+        mainList = list;
     }
 
     public void addTask(View button){
@@ -100,12 +122,14 @@ public class MainActivity extends AppCompatActivity{
         Gson gson = new Gson();
         TypeToken<ArrayList<Task>> taskArrayList = new TypeToken<ArrayList<Task>>(){};
         ArrayList<Task> list = gson.fromJson(toDoList, taskArrayList.getType());
+
        for (Task task : list){
            if (task.getTitle().equals(completedTask.getTitle())){
                list.remove(task);
                break;
            }
        }
+
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.apply();
         editor.putString("ToDoList", gson.toJson(list));
@@ -130,6 +154,59 @@ public class MainActivity extends AppCompatActivity{
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+        if (pos == 0){
+            setCategory(null);
+        }
+        else {
+            setCategory(parent.getItemAtPosition(pos).toString());
+        }
+        filterList();
+    }
+
+    public void onNothingSelected(AdapterView<?> parent) {
+        setCategory(null);
+    }
+
+    public void populateList(ArrayList<Task> list){
+        ToDoListAdapter toDoListAdapter = new ToDoListAdapter(this, list);
+
+        ListView listView = (ListView) findViewById(R.id.main_list);
+        listView.setAdapter(toDoListAdapter);
+    }
+
+    public void setCategory(String newCategory){
+        category = newCategory;
+
+        PreferenceManager.getDefaultSharedPreferences(this)
+                .edit()
+                .putString(getString(R.string.preference_file_key_category), category)
+                .apply();
+    }
+
+    public void filterList(){
+        ArrayList<Task> filteredList = new ArrayList<Task>();
+        if (category != null && category.equals("Priority")){
+            for (Task task : mainList){
+                if (task.isPriority()){
+                    filteredList.add(task);
+                }
+            }
+            populateList(filteredList);
+        }
+        else if (category != null){
+            for (Task task : mainList){
+                if (task.getCategory() != null && task.getCategory().equals(category)){
+                    filteredList.add(task);
+                }
+            }
+            populateList(filteredList);
+        }
+        else {
+            populateList(mainList);
+        }
     }
 
 }

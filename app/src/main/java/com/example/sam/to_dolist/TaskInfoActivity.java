@@ -6,10 +6,13 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,7 +20,9 @@ import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public class TaskInfoActivity extends AppCompatActivity {
+public class TaskInfoActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
+
+    private String category = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +32,12 @@ public class TaskInfoActivity extends AppCompatActivity {
         Task task = (Task) getIntent().getSerializableExtra("task");
 
         final EditText dueDate = (EditText) findViewById(R.id.due_date);
+
+        Spinner categories = (Spinner) findViewById(R.id.category);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.categories, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        categories.setAdapter(adapter);
+        categories.setOnItemSelectedListener(this);
 
         if (task != null) {
             EditText title = (EditText) findViewById(R.id.info_task_title);
@@ -45,6 +56,14 @@ public class TaskInfoActivity extends AppCompatActivity {
             checkBox.setChecked(task.isPriority());
 
             dueDate.setText(task.getDueDate());
+
+            if (task.getCategory() != null){
+                for (int i = 0; i < 5; i++) {
+                    if (categories.getItemAtPosition(i).toString().equals(task.getCategory())) {
+                        categories.setSelection(i);
+                    }
+                }
+            }
         }
 
         dueDate.setOnClickListener(new View.OnClickListener() {
@@ -65,6 +84,9 @@ public class TaskInfoActivity extends AppCompatActivity {
                 datePickerDialog.show();
             }
         } );
+
+
+
     }
 
     public void onClick(View button){
@@ -77,6 +99,7 @@ public class TaskInfoActivity extends AppCompatActivity {
         task.setDescription(description.getText().toString());
         task.setDateString(created.getText().toString());
         task.setDueDate(dueDate.getText().toString());
+        task.setCategory(category);
 
         if (priority.isChecked()){
             task.setPriority(true);
@@ -88,5 +111,23 @@ public class TaskInfoActivity extends AppCompatActivity {
 
         Toast.makeText(this, "Task saved", Toast.LENGTH_SHORT).show();
 
+    }
+
+    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id ){
+        if (pos == 0){
+            category = null;
+        }
+        else {
+            category = parent.getItemAtPosition(pos).toString();
+        }
+    }
+
+    public void onNothingSelected(AdapterView<?> parent){
+        category = null;
+    }
+
+    public void clearDate(View view){
+        EditText dueDate = (EditText) findViewById(R.id.due_date);
+        dueDate.setText(null);
     }
 }

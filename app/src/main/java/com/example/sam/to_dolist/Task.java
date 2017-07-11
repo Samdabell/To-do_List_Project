@@ -16,6 +16,7 @@ public class Task implements Serializable{
     private String dateString;
     private boolean priority;
     private String dueDate;
+    private String category;
 
     public Task(String title) {
         this.title = title;
@@ -24,6 +25,7 @@ public class Task implements Serializable{
         dateString = null;
         priority = false;
         dueDate = null;
+        category = null;
     }
 
     public String getTitle() {
@@ -77,5 +79,13 @@ public class Task implements Serializable{
 
     public void setDueDate(String dueDate) {
         this.dueDate = dueDate;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 }

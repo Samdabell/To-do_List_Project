@@ -13,4 +13,22 @@
     <string name="date_created">Date Created: </string>
     <string name="priority_check">Priority?</string>
     <string name="due_date_hint">Due Date (Optional)</string>
+    <string name="category">Category</string>
+    <string name="preference_file_key_category">CATEGORY</string>
+    <string name="clear">Clear</string>
+    <string-array name="categories">
+        <item>None</item>
+        <item>Work</item>
+        <item>Home</item>
+        <item>Social</item>
+        <item>Other</item>
+    </string-array>
+    <string-array name="categories_view">
+        <item>All</item>
+        <item>Priority</item>
+        <item>Work</item>
+        <item>Home</item>
+        <item>Social</item>
+        <item>Other</item>
+    </string-array>
 </resources>
