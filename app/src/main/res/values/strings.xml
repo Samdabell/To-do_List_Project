@@ -16,6 +16,7 @@
     <string name="category">Category</string>
     <string name="preference_file_key_category">CATEGORY</string>
     <string name="clear">Clear</string>
+    <string name="warning">Due Date Passed</string>
     <string-array name="categories">
         <item>None</item>
         <item>Work</item>

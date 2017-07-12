@@ -12,12 +12,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -25,9 +22,7 @@ import com.google.gson.reflect.TypeToken;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import static android.R.id.list;
-import static android.R.id.toggle;
-import static com.example.sam.to_dolist.R.array.categories;
+
 
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
